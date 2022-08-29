@@ -1,0 +1,289 @@
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item me-auto">
+                <a class="navbar-brand" href="#">
+                    <span class="brand-logo">                        
+                        <img src="~/images/logo/logo-dinas-25.png" alt="logo" class="brand-logo" />
+                    </span>
+                    <h2 class="brand-text">Wajib Retribusi</h2>
+                </a>
+            </li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
+        </ul>
+    </div>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="navigation-header">
+                <span data-i18n="Operasional">Main Menu</span>
+            </li>
+            <li class='nav-item @(ViewBag.Title == "Dashboard" ? "active" : "")'>
+                <a class="d-flex align-items-center" href="/">
+                    <i data-feather="home"></i>
+                    <span class="menu-title text-truncate" data-i18n="Home">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="layout"></i>
+                    <span class="menu-title text-truncate" data-i18n="Administrator">Administrator</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
+                        <ul class="menu-content">
+                            <li class='@(ViewBag.Title == "Master Kota/Kabupaten" ? "active" : "")'>
+                                <a asp-controller="Kabupaten" asp-action="Index">Kota/Kabupaten</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Master Kecamatan" ? "active" : "")'>
+                                <a asp-controller="Kecamatan" asp-action="Index">Kecamatan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Master Kelurahan" ? "active" : "")'>
+                                <a asp-controller="Kelurahan" asp-action="Index">Kelurahan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Bidang UPT/Dinas" ? "active" : "")'>
+                                <a asp-controller="Bidang" asp-action="Index">Bidang/UPT/Dinas</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Master Status Lahan" ? "active" : "")'>
+                                <a asp-controller="StatusLahan" asp-action="Index">Status Lahan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Master Penugasan" ? "active" : "")'>
+                                <a asp-controller="Penugasan" asp-action="Index">Penugasan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Master Pegawai" ? "active" : "")'>
+                                <a asp-controller="Pegawai" asp-action="Index">Pegawai</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Pusat Bantuan">Pusat Bantuan</span></a>
+                    </li>                    
+                </ul>
+            </li>
+            <li class="navigation-header">
+                <span data-i18n="Operasional">Operasional</span>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="truck"></i>
+                    <span class="menu-title text-truncate" data-i18n="Transportasi Sampah">Transportasi Sampah</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
+                        <ul class="menu-content">
+                            <li class='@(ViewBag.Title == "Merk Kendaraan" ? "active" : "")'>
+                                <a asp-controller="Merk" asp-action="Index">Merk Kendaraan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Tipe Kendaraan" ? "active" : "")'>
+                                <a asp-controller="TipeKendaraan" asp-action="Index">Tipe Kendaraan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Kendaraan" ? "active" : "")'>
+                                <a asp-controller="Kendaraan" asp-action="Index">Kendaraan</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Jenis Kendaraan" ? "active" : "")'>
+                                <a asp-controller="JenisKendaraan" asp-action="Index">Jenis Kendaraan</a>
+                            </li>
+                            <li><a href="#">Sinkronisasi Kendaraan</a></li>
+                            <li><a href="#">Opr/Koordinator TPS</a></li>
+                            <li class='@(ViewBag.Title == "Jenis TPS" ? "active" : "")'>
+                                <a asp-controller="JenisTps" asp-action="Index">Jenis TPS</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Lokasi TPS" ? "active" : "")'>
+                                <a asp-controller="Tps" asp-action="Index">Lokasi TPS</a>
+                            </li>
+                            <li><a href="#">Bengkel</a></li>
+                            <li><a href="#">Timbulan Sampah</a></li>
+                            <li><a href="#">Lok. Penanganan Sungai</a></li>
+                            <li><a href="#">Koordinator LPS</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Operasional Transportasi">Operasional Transportasi</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Perawatan Kendaraan</a></li>
+                            <li><a href="#">KIR</a></li>
+                            <li><a href="#">Neraca TPS</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Monitoring">Monitoring</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Kendaraan Sampah (Peta Dasar)</a></li>
+                            <li><a href="#">Kendaraan Sampah (Peta OSM)</a></li>
+                            <li><a href="#">Antrian Bantargebang</a></li>
+                            <li><a href="#">Timbulan Sampah</a></li>
+                            <li><a href="#">Pemakaian BBM</a></li>
+                            <li><a href="#">History Perjalanan</a></li>
+                            <li><a href="#">Pemantauan Zona</a></li>
+                            <li><a href="#">Pemantauan Kecepatan</a></li>
+                            <li><a href="#">Notifikasi Perawatan</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Laporan">Laporan</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Rekap Neraca TPS</a></li>
+                            <li><a href="#">Peta Neraca TPS</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="file-text"></i>
+                    <span class="menu-title text-truncate" data-i18n="Operasional Kendaraan">Operasional Kendaraan</span>                    
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Pembuatan SPJ">Pembuatan SPJ</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Laporan SPJ">Laporan SPJ</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="trash-2"></i>
+                    <span class="menu-title text-truncate" data-i18n="Pengolahan Sampah B3">Pengolahan Sampah B3</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Periode</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Pengelolaan Sampah B3">Pengelolaan Sampah B3</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Satuan Pelaksana</a></li>
+                            <li><a href="#">Suku Dinas</a></li>
+                            <li><a href="#">Manifes</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="dollar-sign"></i>
+                    <span class="menu-title text-truncate" data-i18n="Wajib Retribusi">Wajib Retribusi</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
+                        <ul class="menu-content">
+                            <li class='@(ViewBag.Title == "Jenis WR" ? "active" : "")'>
+                                <a asp-action="Index" asp-controller="JenisWR">Jenis WR</a>
+                            </li>
+                            <li><a href="#">Operator WR</a></li>
+                            <li><a href="#">Lokasi WR</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Laporan">Laporan</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">WR Harian</a></li>
+                            <li><a href="#">Bulanan</a></li>
+                            <li><a href="#">Per Tanggal</a></li>
+                            <li><a href="#">Data Belum Diinput</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="navigation-header">
+                <span data-i18n="Lingkugan &amp; Usaha">Lingkugan &amp; Usaha</span>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="feather"></i>
+                    <span class="menu-title text-truncate" data-i18n="Kualitas Lingkungan">Kualitas Lingkungan</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
+                        <ul class="menu-content">
+                            <li class='@(ViewBag.Title == "Jenis Pencemaran" ? "active" : "")'>
+                                <a asp-controller="JenisPencemaran" asp-action="Index">Jenis Pencemaran</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Nilai Pencemaran Udara" ? "active" : "")'>
+                                <a asp-controller="NilaiPencemaran" asp-action="Index">Nilai Pencemaran Udara</a>
+                            </li>
+                            <li><a href="#">Sungai</a></li>
+                            <li><a href="#">Periode Air Tanah</a></li>
+                            <li><a href="#">Periode Air Situ Waduk</a></li>
+                            <li><a href="#">Periode Air Sungai</a></li>
+                            <li><a href="#">Periode Air Laut</a></li>
+                            <li><a href="#">Narasi Lingkungan</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Kualitas Lingkungan">Data Kualitas Lingkungan</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Air Tanah</a></li>
+                            <li><a href="#">Air Situ Waduk</a></li>
+                            <li><a href="#">Air Sungai</a></li>
+                            <li><a href="#">Air Laut</a></li>
+                            <li><a href="#">Udara</a></li>                            
+                        </ul>
+                    </li>                    
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="shopping-bag"></i>
+                    <span class="menu-title text-truncate" data-i18n="Kegiatan Usaha/Industri">Kegiatan Usaha/Industri</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Download Panduan">Download Panduan</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Petugas</a></li>
+                            <li><a href="#">Kegiatan Usaha</a></li>
+                            <li class='@(ViewBag.Title == "Limbah B3" ? "active" : "")'>
+                                <a asp-controller="LimbahB3" asp-action="Index">Limbah B3</a>
+                            </li>
+                            <li><a href="#">Tempat Pembuangan Limbah</a></li>
+                            <li class='@(ViewBag.Title == "Kategori USK" ? "active" : "")'>
+                                <a asp-controller="KategoriUSK" asp-action="Index">Kategori USK</a>
+                            </li>
+                            <li><a href="#">Narasi Kegiatan Usaha</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Pengawasan Keg. Usaha">Pengawasan Keg. Usaha</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Pengawasan Aktif</a></li>
+                            <li><a href="#">Pengawasan Tdk Aktif</a></li>
+                            <li><a href="#">USK</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Monitoring">Monitoring</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Kegiatan Usaha</a></li>
+                            <li><a href="#">USK</a></li>
+                            <li><a href="#">IPAL</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Laporan">Laporan</span></a>
+                        <ul class="menu-content">
+                            <li><a href="#">Jenis Kegiatan Usaha</a></li>
+                            <li><a href="#">Wilayah Kegiatan Usaha</a></li>
+                            <li><a href="#">Belum Dilakukan Peng. Aktif</a></li>
+                            <li><a href="#">Pengawasan Aktif</a></li>
+                            <li><a href="#">Keg. Usaha Memiliki IPAL</a></li>
+                            <li><a href="#">USK</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+//  ================================================================================================
+//  ? TIP:  It is recommended to use this file for overriding component variables.
+//  ================================================================================================
+
+.progress {
+  height: 1.5rem;
+}
+
+.dark-layout {
+  .header-navbar {
+    background-color: $green;
+  }
+}
