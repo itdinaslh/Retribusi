@@ -1,19 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Retribusi.Entites;
+namespace Retribusi.Entities;
 
-[Table("bidang")]
-public class Bidang
+[Table("statuslahan")]
+public class StatusLahan
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int BidangId { get; set; }
+    public int StatusLahanId { get; set; }
 
 #nullable disable
 
-    [Required(ErrorMessage = "Nama Bidang Wajib Diisi")]
     [MaxLength(100)]
-    public string NamaBidang { get; set; }
+    [Required(ErrorMessage = "Nama Status Lahan Wajib Diisi")]
+    public string NamaStatus { get; set; }
+
+    public bool? IsDeleted { get; set; } = false;
 
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
 

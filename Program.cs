@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Retribusi.Repositories;
+using Retribusi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,17 @@ services.AddDbContext<AppDbContext>(options =>
 {
     options.UseMySql(conn, ServerVersion.AutoDetect(conn));
 });
+
+// add service to DI Container
+{
+    services.AddScoped<IBidangRepo, BidangService>();
+    services.AddScoped<IStatusLahan, StatusLahanService>();
+    services.AddScoped<IPenugasan, PenugasanService>();
+    services.AddScoped<IKabupatenRepo, KabupatenService>();
+    services.AddScoped<IKecamatanRepo, KecamatanService>();
+    services.AddScoped<IKelurahanRepo, KelurahanService>();
+    services.AddScoped<IJenisKendaraan, JenisKendaraanService>();
+}
 
 services.AddAuthentication(options => {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;

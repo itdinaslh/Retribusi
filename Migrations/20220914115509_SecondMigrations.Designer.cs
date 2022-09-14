@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retribusi.Data;
 
@@ -10,9 +11,10 @@ using Retribusi.Data;
 namespace Retribusi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220914115509_SecondMigrations")]
+    partial class SecondMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("BidangID");
 
-                    b.ToTable("bidang");
+                    b.ToTable("Bidang");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.JenisKendaraan", b =>
@@ -68,7 +70,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("JenisID");
 
-                    b.ToTable("jeniskendaraan");
+                    b.ToTable("JenisKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.JenisTps", b =>
@@ -90,7 +92,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("JenisID");
 
-                    b.ToTable("jenistps");
+                    b.ToTable("JenisTps");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kabupaten", b =>
@@ -123,7 +125,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("ProvinsiID");
 
-                    b.ToTable("kabupaten");
+                    b.ToTable("Kabupaten");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kecamatan", b =>
@@ -153,7 +155,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("KabupatenID");
 
-                    b.ToTable("kecamatan");
+                    b.ToTable("Kecamatan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kelurahan", b =>
@@ -183,7 +185,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("KecamatanID");
 
-                    b.ToTable("kelurahan");
+                    b.ToTable("Kelurahan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kendaraan", b =>
@@ -275,7 +277,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("TipeKendaraanId");
 
-                    b.ToTable("kendaraan");
+                    b.ToTable("Kendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.MerkKendaraan", b =>
@@ -304,7 +306,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("MerkKendaraanId");
 
-                    b.ToTable("merkkendaraan");
+                    b.ToTable("MerkKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Pegawai", b =>
@@ -377,7 +379,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("TipePegawaiId");
 
-                    b.ToTable("pegawai");
+                    b.ToTable("Pegawai");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Penugasan", b =>
@@ -396,7 +398,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("PenugasanId");
 
-                    b.ToTable("penugasan");
+                    b.ToTable("Penugasan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Provinsi", b =>
@@ -429,7 +431,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("ProvinsiID");
 
-                    b.ToTable("provinsi");
+                    b.ToTable("Provinsi");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.StatusLahan", b =>
@@ -454,7 +456,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("StatusLahanId");
 
-                    b.ToTable("statuslahan");
+                    b.ToTable("StatusLahan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.StatusWR", b =>
@@ -475,7 +477,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("statuswr");
+                    b.ToTable("StatusWR");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.TipeKendaraan", b =>
@@ -502,7 +504,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("MerkKendaraanId");
 
-                    b.ToTable("tipekendaraan");
+                    b.ToTable("TipeKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.TipePegawai", b =>
@@ -521,7 +523,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("TipePegawaiId");
 
-                    b.ToTable("tipepegawai");
+                    b.ToTable("TipePegawai");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Tps", b =>
@@ -586,7 +588,7 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("StatusLahanId");
 
-                    b.ToTable("tps");
+                    b.ToTable("Tps");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kabupaten", b =>

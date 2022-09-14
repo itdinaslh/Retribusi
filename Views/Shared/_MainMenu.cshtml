@@ -34,18 +34,18 @@
                         <a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Data Referensi">Data Referensi</span></a>
                         <ul class="menu-content">
                             <li class='@(ViewBag.Title == "Master Kota/Kabupaten" ? "active" : "")'>
-                                <a asp-controller="Kabupaten" asp-action="Index">Kota/Kabupaten</a>
+                                <a asp-controller="Wilayah" asp-action="Kabupaten">Kota/Kabupaten</a>
                             </li>
                             <li class='@(ViewBag.Title == "Master Kecamatan" ? "active" : "")'>
-                                <a asp-controller="Kecamatan" asp-action="Index">Kecamatan</a>
+                                <a asp-controller="Wilayah" asp-action="Kecamatan">Kecamatan</a>
                             </li>
                             <li class='@(ViewBag.Title == "Master Kelurahan" ? "active" : "")'>
-                                <a asp-controller="Kelurahan" asp-action="Index">Kelurahan</a>
+                                <a asp-controller="Wilayah" asp-action="Kelurahan">Kelurahan</a>
                             </li>
                             <li class='@(ViewBag.Title == "Bidang UPT/Dinas" ? "active" : "")'>
                                 <a asp-controller="Bidang" asp-action="Index">Bidang/UPT/Dinas</a>
                             </li>
-                            <li class='@(ViewBag.Title == "Master Status Lahan" ? "active" : "")'>
+                            <li class='@(ViewBag.Title == "Status Lahan" ? "active" : "")'>
                                 <a asp-controller="StatusLahan" asp-action="Index">Status Lahan</a>
                             </li>
                             <li class='@(ViewBag.Title == "Master Penugasan" ? "active" : "")'>
