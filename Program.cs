@@ -32,6 +32,10 @@ services.AddDbContext<AppDbContext>(options =>
     services.AddScoped<IKecamatanRepo, KecamatanService>();
     services.AddScoped<IKelurahanRepo, KelurahanService>();
     services.AddScoped<IJenisKendaraan, JenisKendaraanService>();
+    services.AddScoped<IJenisTps, JenisTpsService>();
+    services.AddScoped<IMerkKendaraan, MerkKendaraanService>();
+    services.AddScoped<IJenisWR, JenisWRService>();
+    services.AddScoped<ITipeKendaraan, TipeKendaraanService>();
 }
 
 services.AddAuthentication(options => {
@@ -40,7 +44,7 @@ services.AddAuthentication(options => {
 
 .AddCookie(options => {
     options.LoginPath = "/login";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.SlidingExpiration = false;
     options.AccessDeniedPath = "/account/denied";
 })

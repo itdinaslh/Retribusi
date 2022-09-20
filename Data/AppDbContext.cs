@@ -9,6 +9,8 @@ public class AppDbContext : DbContext
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+
+    // Handle Main Master Data
     public DbSet<Bidang> Bidangs { get; set; }
     public DbSet<Provinsi> Provinsis { get; set; }
     public DbSet<Kabupaten> Kabupatens { get; set; }
@@ -17,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<StatusWR> Statuses { get; set; }
     public DbSet<StatusLahan> StatusLahans { get; set; }
     public DbSet<Penugasan> Penugasans { get; set; }
+    public DbSet<JenisWR> JenisWRs { get; set; }
 
     // Handle Kendaraan
     public DbSet<JenisKendaraan> JenisKendaraans { get; set; }
