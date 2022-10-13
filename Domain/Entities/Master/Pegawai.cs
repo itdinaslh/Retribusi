@@ -61,12 +61,14 @@ public class Pegawai
     [MaxLength(15)]
     public Kelurahan? Kelurahan { get; set; }
 
+    [MaxLength(255)]
+    public string? Alamat { get; set; }
+
 #nullable disable
     public TipePegawai TipePegawai { get; set; }
 
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
     public DateTime? UpdatedAt { get; set; } = DateTime.Now;
-
-
+    
 }
