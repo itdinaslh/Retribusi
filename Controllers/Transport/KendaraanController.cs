@@ -18,7 +18,7 @@ public class KendaraanController : Controller
         this.repo = repo;
     }
 
-    [HttpGet("/master/kendaraan")]
+    [HttpGet("/tranasport/kendaraan")]
     public IActionResult Index()
     {
         return View("~/Views/Transport/Kendaraan/Index.cshtml");

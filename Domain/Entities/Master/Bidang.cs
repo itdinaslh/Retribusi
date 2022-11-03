@@ -27,4 +27,8 @@ public class Bidang {
 
     public List<Pegawai>? Pegawais { get; set; }
 
+#nullable disable
+
+    public List<Driver> Drivers { get; set; }
+
 }

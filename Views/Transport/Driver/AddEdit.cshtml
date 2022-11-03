@@ -1,0 +1,98 @@
+﻿@model DriverVM
+
+<div class="modal-header bg-transparent">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body pb-5 px-sm-5 pt-50">
+    <div class="text-center mb-2">
+        <h1 class="mb-1">Tambah Driver</h1>
+    </div>
+    <form action="/transport/driver/store" method="post" class="row gy-1 pt-75">
+        <input type="hidden" asp-for="Driver.DriverId" />
+        <!-- First Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label" for="NIK">NIK *</label>
+            <input asp-for="Driver.NIK" class="form-control" autocomplete="off" required autofocus />
+            <span asp-validation-for="Driver.NIK" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label" for="Nama">Nama *</label>
+            <input asp-for="Driver.Nama" class="form-control" required/>
+            <span asp-validation-for="Driver.Nama" class="text-danger"></span>
+        </div>
+        <!-- Second Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">No HP *</label>
+            <input asp-for="Driver.NoHP" class="form-control" required />
+            <span asp-validation-for="Driver.NoHP" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Email *</label>
+            <input asp-for="Driver.Email" class="form-control" required />
+            <span asp-validation-for="Driver.Email" class="text-danger"></span>
+        </div>
+        <!-- Alamat Lines / 3rd Row -->
+        <div class="col-12">
+            <label class="form-label" for="Alamat">Alamat *</label>
+            <textarea asp-for="Driver.Alamat" rows="2" class="form-control" required></textarea>
+            <span asp-validation-for="Driver.Alamat" class="text-danger"></span>
+        </div>
+        <!-- 4th Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Tipe Pegawai</label>
+            <select class="form-control mySelect" asp-for="Driver.TipePegawaiId">
+                <option value="1">PNS</option>
+                <option value="2" selected>PJLP</option>
+            </select>          
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Tahun Masuk</label>
+            <input asp-for="Driver.TahunMasuk" class="form-control" />
+        </div>
+        <!-- 5th Row / Catatan -->
+        <div class="col-12 mb-2">
+            <label class="form-label">Catatan</label>
+            <textarea class="form-control" rows="2" asp-for="Driver.Catatan" placeholder="Catatan mengenai pengemudi"></textarea>
+        </div>
+        <h4>Wilayah Penugasan</h4>
+        <!-- 6th Row / Bidang Penugasan -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Bidang Penugasan</label>
+            <select id="theBidang" class="form-control" asp-for="Driver.BidangId">
+                @if(Model.NamaBidang is not null) {
+                    <option value="@Model.Driver.BidangId" selected>@Model.NamaBidang</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Kota / Wilayah</label>
+            <select id="theKota" class="form-control mySelect">
+                @if(Model.NamaKota is not null) {
+                    <option value="@Model.KotaId" selected>@Model.NamaKota</option>
+                }
+            </select>
+        </div>
+        <!-- 7th Row / Kecamatan dan Kelurahan tugas -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Kecamatan</label>
+            <select id="theKecamatan" class="form-control mySelect" asp-for="Driver.KecamatanID">
+                @if (Model.NamaKecamatan is not null) {
+                    <option value="@Model.Driver.KecamatanID" selected>@Model.NamaKecamatan</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Kelurahan</label>
+            <select id="theKelurahan" asp-for="Driver.KelurahanID" class="form-control mySelect">
+                @if (Model.NamaKelurahan is not null) {
+                    <option value="@Model.Driver.KelurahanID" selected>@Model.NamaKelurahan</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 text-center mt-2 pt-50">
+            <button type="submit" class="btn btn-success me-1">Submit</button>
+            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
+        </div>
+    </form>
+ </div>

@@ -56,6 +56,14 @@
                     <option value="@Model.Kendaraan.BidangAsalId" selected="selected">@Model.BidangAsal</option>
                 }
             </select>
+        </div>        
+        <div class="col-12 col-md-6">
+            <label class="form-label" for="Kendaraan.NoRangka">No Rangka</label>
+            <input asp-for="Kendaraan.NoRangka" class="form-control" />
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label" for="Kendaraan.Konsumsi">Konsumsi KM/Liter</label>
+            <input asp-for="Kendaraan.KonsumsiBBM" class="form-control" />
         </div>
         <div class="col-12 col-md-6">
             <label class="form-label" for="KotaAsal">Kota/Wilayah</label>

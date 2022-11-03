@@ -31,5 +31,5 @@ public class Kelurahan {
 
 #nullable enable
 
-    public List<Pegawai>? Pegawais { get; set; }
+    public List<Driver>? Drivers { get; set; }
 }

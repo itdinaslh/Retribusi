@@ -19,7 +19,7 @@
         @if (Model.BidangID != Guid.Empty) {
             <div class="col-12">
                 <label class="form-label">ID Bidang</label>
-                <input type="text" asp-for="BidangID" class="form-control" autocomplete="off" autofocus />
+                <input type="text" asp-for="BidangID" class="form-control" autocomplete="off" disabled />
                 <span asp-validation-for="BidangID" class="text-danger"></span>
             </div>
         }

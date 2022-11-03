@@ -32,6 +32,7 @@ public class AppDbContext : DbContext
     // Handle Pegawai
     public DbSet<TipePegawai> TipePegawais { get; set; }
     public DbSet<Pegawai> Pegawais { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

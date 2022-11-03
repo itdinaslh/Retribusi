@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retribusi.Data;
 
@@ -10,9 +11,10 @@ using Retribusi.Data;
 namespace Retribusi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221023211011_CreateDriverTable")]
+    partial class CreateDriverTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +52,6 @@ namespace Retribusi.Migrations
                     b.Property<Guid>("DriverId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
-
-                    b.Property<string>("Alamat")
-                        .HasColumnType("longtext");
 
                     b.Property<Guid>("BidangId")
                         .HasColumnType("char(36)");

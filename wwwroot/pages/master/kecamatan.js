@@ -27,8 +27,7 @@ function loadTable() {
             { data: "namaProvinsi", name: "namaProvinsi", autoWidth: true },
             { data: "latitude", name: "latitude", autoWidth: true },
             { data: "longitude", name: "longitude", autoWidth: true }
-        ],
-        order: [[0, "desc"]]
+        ]
     })
 }
 

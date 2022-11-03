@@ -26,8 +26,7 @@ function loadTable() {
             { data: "namaKecamatan", name: "namaKecamatan", autoWidth: true },
             { data: "namaKabupaten", name: "namaKabupaten", autoWidth: true },
             { data: "namaProvinsi", name: "namaProvinsi", autoWidth: true }
-        ],
-        order: [[0, "desc"]]
+        ]
     })
 }
 

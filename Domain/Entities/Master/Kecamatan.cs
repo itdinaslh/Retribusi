@@ -36,5 +36,7 @@ public class Kecamatan {
 
     public List<Kendaraan>? KendaraanPenugasan { get; set; }
 
-    public List<Pegawai>? Pegawais { get; set; }
+#nullable disable
+
+    public List<Driver> Drivers { get; set; }
 }
