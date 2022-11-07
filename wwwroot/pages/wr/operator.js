@@ -17,25 +17,26 @@ function loadTable() {
         serverSide: true,
         lengthMenu: [5, 10, 25, 50],
         stateSave: true,
-        filter: true,
+        filter: true,        
         orderMulti: false,
         ajax: {
-            url: "/api/transport/driver",
+            url: "/api/wr/operator",
             type: "POST",
             dataType: "json"
         },
-        columns: [            
+        columns: [
             { data: "nama", name: "nama", sortable: false, autoWidth: true },
+            { data: "nip", name: "nip", sortable: false, autoWidth: true },
             { data: "nik", name: "nik", sortable: false, autoWidth: true },
             { data: "noHp", name: "noHp", sortable: false, autoWidth: true },
             { data: "tipe", name: "tipe", sortable: false, autoWidth: true },
             { data: "status", name: "status", sortable: false, autoWidth: true },
-            { data: "bidang", name: "bidang", sortable: false, autoWidth: true },
+            { data: "bidang", name: "bidang", sortable: false, autoWidth: true, nowrap: false },
             { data: "kota", name: "kota", sortable: false, autoWidth: true },
             { data: "kecamatan", name: "kecamatan", sortable: false, autoWidth: true },
             {
                 data: 'pegawaiId',
-                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-success mr-2 showMe' style='width:100%;' data-href='/transport/driver/edit/?driverId=" + row.pegawaiId + "'> Edit</button>" },
+                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-success mr-2 showMe' style='width:100%;' data-href='/wr/operator/edit/?operatorId=" + row.pegawaiId + "'> Edit</button>" },
                 sortable: false
             }
         ]

@@ -29,6 +29,4 @@ public class Bidang {
 
 #nullable disable
 
-    public List<Driver> Drivers { get; set; }
-
 }

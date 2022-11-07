@@ -1,27 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Retribusi.Repositories;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Retribusi.Controllers.api;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
-public class DriverApiController : ControllerBase
+public class ClientWRApiController : ControllerBase
 {
-    private readonly IPegawai repo;
+    private readonly IClientWR repo;
 
-    public DriverApiController(IPegawai repo)
+    public ClientWRApiController(IClientWR repo)
     {
         this.repo = repo;
     }
 
-    [HttpPost("/api/transport/driver")]
-    public async Task<IActionResult> DriverTable()
+    [HttpPost("/api/wr/clients")]
+    public async Task<IActionResult> ClientWRTable()
     {
         var draw = Request.Form["draw"].FirstOrDefault();
         var start = Request.Form["start"].FirstOrDefault();
@@ -33,18 +29,18 @@ public class DriverApiController : ControllerBase
         int skip = start != null ? Convert.ToInt32(start) : 0;
         int recordsTotal = 0;
 
-        var init = repo.Pegawais.Where(x => x.RoleId == 2)
+        var init = repo.ClientWRs
             .Select(x => new {
-                pegawaiId = x.PegawaiId,
-                nama = x.NamaPegawai,
-                nik = x.NIK,
-                noHp = x.NoHP,
-                tipe = x.TipePegawai.NamaTipe,
-                status = x.StatusAktif == true ? "Aktif" : "Non Aktif",
-                bidang = x.Bidang!.NamaBidang,
-                kota = x.Kecamatan!.Kabupaten.NamaKabupaten,
-                kecamatan = x.Kecamatan.NamaKecamatan
-        });
+                clientId = x.ClientId,
+                objectName = x.ObjectName,
+                objectPhone = x.ObjectPhone,
+                alamat = x.Alamat,
+                namaJenis = x.JenisWR.NamaJenis,
+                kota = x.Kecamatan.Kabupaten.NamaKabupaten,
+                //status = x.StatusAktif == true ? "Aktif" : "Non Aktif",
+                kecamatan = x.Kecamatan.NamaKecamatan,
+                kelurahan = x.Kelurahan!.NamaKelurahan                
+            });
 
         if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
         {
@@ -53,7 +49,7 @@ public class DriverApiController : ControllerBase
 
         if (!string.IsNullOrEmpty(searchValue))
         {
-            init = init.Where(a => a.nama.ToLower().Contains(searchValue.ToLower()));
+            init = init.Where(a => a.objectName.ToLower().Contains(searchValue.ToLower()));
         }
 
         recordsTotal = init.Count();

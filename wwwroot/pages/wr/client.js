@@ -20,22 +20,29 @@ function loadTable() {
         filter: true,
         orderMulti: false,
         ajax: {
-            url: "/api/transport/driver",
+            url: "/api/wr/clients",
             type: "POST",
             dataType: "json"
         },
-        columns: [            
-            { data: "nama", name: "nama", sortable: false, autoWidth: true },
-            { data: "nik", name: "nik", sortable: false, autoWidth: true },
-            { data: "noHp", name: "noHp", sortable: false, autoWidth: true },
-            { data: "tipe", name: "tipe", sortable: false, autoWidth: true },
-            { data: "status", name: "status", sortable: false, autoWidth: true },
-            { data: "bidang", name: "bidang", sortable: false, autoWidth: true },
+        columns: [
+            { data: "objectName", name: "objectName", sortable: false, autoWidth: true },
+            { data: "objectPhone", name: "objectPhone", sortable: false, autoWidth: true },
+            { data: "alamat", name: "alamat", sortable: false, autoWidth: true },
+            { data: "namaJenis", name: "namaJenis", sortable: false, autoWidth: true },
             { data: "kota", name: "kota", sortable: false, autoWidth: true },
             { data: "kecamatan", name: "kecamatan", sortable: false, autoWidth: true },
+            { data: "kelurahan", name: "kelurahan", sortable: false, autoWidth: true, nowrap: false },
             {
                 data: 'pegawaiId',
-                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-success mr-2 showMe' style='width:100%;' data-href='/transport/driver/edit/?driverId=" + row.pegawaiId + "'> Edit</button>" },
+                render: function (data, type, row) {
+                    // return "<button type='button' class='btn btn-sm btn-success mr-2 showMe' style='width:100%;' data-href='/wr/operator/edit/?operatorId=" + row.pegawaiId + "'> Edit</button>"
+                    return 
+                    `<div class="dropdown chart-dropdown">
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <button class="dropdown-item showMe" data-href="/wr/lokasi/edit/?clientId=` + row.clientid  + `">Edit</button>
+                        </div>
+                    </div>`
+                },
                 sortable: false
             }
         ]

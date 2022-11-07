@@ -18,7 +18,7 @@ public class KendaraanController : Controller
         this.repo = repo;
     }
 
-    [HttpGet("/tranasport/kendaraan")]
+    [HttpGet("/transport/kendaraan")]
     public IActionResult Index()
     {
         return View("~/Views/Transport/Kendaraan/Index.cshtml");
@@ -41,17 +41,21 @@ public class KendaraanController : Controller
                 x.NoPintu,
                 x.MerkKendaraanId,
                 x.TipeKendaraanId,
-                x.JenisKendaraanId,
+                x.JenisKendaraanId,                
                 x.BidangAsalId,
                 x.KabupatenAsalId,
                 x.KecamatanAsalId,
                 x.TahunPengadaan,
+                x.KonsumsiBBM,
+                x.NoRangka,
+                x.FungsiKendaraanID,
                 x.BidangPenugasanId,
                 x.KabupatenPenugasanId,
                 x.KecamatanPenugasanId,
                 x.MerkKendaraan!.NamaMerk,
                 x.TipeKendaraan!.NamaTipe,
                 x.JenisKendaraan!.NamaJenis,
+                x.FungsiKendaraan!.NamaFungsi,
                 BidangAsal = x.BidangAsal!.NamaBidang,
                 KabupatenAsal = x.KabupatenAsal!.NamaKabupaten,
                 KecamatanAsal = x.KecamatanAsal!.NamaKecamatan,
@@ -71,7 +75,10 @@ public class KendaraanController : Controller
                 MerkKendaraanId = data!.MerkKendaraanId,
                 TipeKendaraanId = data!.TipeKendaraanId,
                 JenisKendaraanId = data!.JenisKendaraanId,
+                FungsiKendaraanID = data!.FungsiKendaraanID,
                 TahunPengadaan = data!.TahunPengadaan,
+                NoRangka = data!.NoRangka,
+                KonsumsiBBM = data!.KonsumsiBBM,
                 BidangAsalId = data!.BidangAsalId,
                 KabupatenAsalId = data!.KabupatenAsalId,
                 KecamatanAsalId = data!.KecamatanAsalId,
@@ -83,6 +90,7 @@ public class KendaraanController : Controller
             NamaMerk = data!.NamaMerk,
             NamaTipe = data!.NamaTipe,
             NamaJenis = data!.NamaJenis,
+            NamaFungsi = data!.NamaFungsi,
             BidangAsal = data!.BidangAsal,
             KabupatenAsal = data!.KabupatenAsal,
             KecamatanAsal = data!.KecamatanAsal,

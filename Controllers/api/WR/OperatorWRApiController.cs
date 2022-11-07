@@ -1,27 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Retribusi.Repositories;
 using System.Linq.Dynamic.Core;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Retribusi.Controllers.api;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
-public class DriverApiController : ControllerBase
+public class OperatorWRApiController : ControllerBase
 {
     private readonly IPegawai repo;
 
-    public DriverApiController(IPegawai repo)
+    public OperatorWRApiController(IPegawai repo)
     {
         this.repo = repo;
     }
 
-    [HttpPost("/api/transport/driver")]
-    public async Task<IActionResult> DriverTable()
+    [HttpPost("/api/wr/operator")]
+    public async Task<IActionResult> OperatorTable()
     {
         var draw = Request.Form["draw"].FirstOrDefault();
         var start = Request.Form["start"].FirstOrDefault();
@@ -33,10 +29,11 @@ public class DriverApiController : ControllerBase
         int skip = start != null ? Convert.ToInt32(start) : 0;
         int recordsTotal = 0;
 
-        var init = repo.Pegawais.Where(x => x.RoleId == 2)
+        var init = repo.Pegawais.Where(x => x.RoleId == 3)
             .Select(x => new {
                 pegawaiId = x.PegawaiId,
                 nama = x.NamaPegawai,
+                nip = x.NIP,
                 nik = x.NIK,
                 noHp = x.NoHP,
                 tipe = x.TipePegawai.NamaTipe,
@@ -44,7 +41,7 @@ public class DriverApiController : ControllerBase
                 bidang = x.Bidang!.NamaBidang,
                 kota = x.Kecamatan!.Kabupaten.NamaKabupaten,
                 kecamatan = x.Kecamatan.NamaKecamatan
-        });
+            });
 
         if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
         {

@@ -60,6 +60,9 @@ public class Kendaraan
     public JenisKendaraan JenisKendaraan { get; set; }
 
 #nullable enable
+
+    public int? FungsiKendaraanID { get; set; }
+
     public Bidang? BidangAsal { get; set; }
 
     public Kabupaten? KabupatenAsal { get; set; }
@@ -71,6 +74,8 @@ public class Kendaraan
     public Kabupaten? KabupatenPenugasan { get; set; }
 
     public Kecamatan? KecamatanPenugasan { get; set; }
+
+    public FungsiKendaraan? FungsiKendaraan { get; set; }
 
     public bool? IsDeleted { get; set; } = false;
 

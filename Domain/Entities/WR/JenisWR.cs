@@ -23,4 +23,6 @@ public class JenisWR
 
     public DateTime? UpdatedAt { get; set; } = DateTime.Now;
 
+    public List<ClientWR> ClientWRs { get; set; }
+
 }

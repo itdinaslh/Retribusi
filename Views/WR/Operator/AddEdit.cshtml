@@ -6,9 +6,9 @@
 
 <div class="modal-body pb-5 px-sm-5 pt-50">
     <div class="text-center mb-2">
-        <h1 class="mb-1">Tambah Driver</h1>
+        <h1 class="mb-1">Tambah Operator</h1>
     </div>
-    <form action="/transport/driver/store" method="post" class="row gy-1 pt-75">
+    <form action="/wr/operator/store" method="post" class="row gy-1 pt-75">
         <input type="hidden" asp-for="Pegawai.PegawaiId" />
         <!-- First Row -->
         <div class="col-12 col-md-6">
@@ -17,9 +17,17 @@
             <span asp-validation-for="Pegawai.NIK" class="text-danger"></span>
         </div>
         <div class="col-12 col-md-6">
+            <label class="form-label">NIP</label>
+            <input asp-for="Pegawai.NIP" class="form-control" autocomplete="off" />
+        </div>
+        <div class="col-12 col-md-6">
             <label class="form-label" for="Nama">Nama *</label>
-            <input asp-for="Pegawai.NamaPegawai" class="form-control" required/>
+            <input asp-for="Pegawai.NamaPegawai" class="form-control" required />
             <span asp-validation-for="Pegawai.NamaPegawai" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Tanggal Lahir</label>
+            <input type="date" asp-for="Pegawai.TglLahir" min="1920-01-01" class="form-control" />
         </div>
         <!-- Second Row -->
         <div class="col-12 col-md-6">
@@ -38,33 +46,18 @@
             <textarea asp-for="Pegawai.Alamat" rows="2" class="form-control" required></textarea>
             <span asp-validation-for="Pegawai.Alamat" class="text-danger"></span>
         </div>
-        <!-- 4th Row -->
-        <div class="col-12 col-md-4">
-            <label class="form-label">Tanggal Lahir</label>
-            <input type="date" asp-for="Pegawai.TglLahir" min="1920-01-01" class="form-control" />
-        </div>
-        <div class="col-12 col-md-4">
-            <label class="form-label">Tipe Pegawai</label>
-            <select class="form-control mySelect" asp-for="Pegawai.TipePegawaiId">
-                <option value="1">PNS</option>
-                <option value="2" selected>PJLP</option>
-            </select>          
-        </div>
-        <div class="col-12 col-md-4">
-            <label class="form-label">Tahun Masuk</label>
-            <input asp-for="Pegawai.TahunMasuk" class="form-control" />
-        </div>
         <!-- 5th Row / Catatan -->
         <div class="col-12 mb-2">
             <label class="form-label">Catatan</label>
-            <textarea class="form-control" rows="2" asp-for="Pegawai.Catatan" placeholder="Catatan mengenai pengemudi"></textarea>
+            <textarea class="form-control" rows="2" asp-for="Pegawai.Catatan" placeholder="Catatan mengenai operator"></textarea>
         </div>
         <h4>Wilayah Penugasan</h4>
         <!-- 6th Row / Bidang Penugasan -->
         <div class="col-12 col-md-6">
             <label class="form-label">Bidang Penugasan</label>
             <select id="theBidang" class="form-control" asp-for="Pegawai.BidangId">
-                @if(Model.NamaBidang is not null) {
+                @if (Model.NamaBidang is not null)
+                {
                     <option value="@Model.Pegawai.BidangId" selected>@Model.NamaBidang</option>
                 }
             </select>
@@ -72,7 +65,8 @@
         <div class="col-12 col-md-6">
             <label class="form-label">Kota / Wilayah</label>
             <select id="theKota" class="form-control mySelect">
-                @if(Model.NamaKota is not null) {
+                @if (Model.NamaKota is not null)
+                {
                     <option value="@Model.KotaID" selected>@Model.NamaKota</option>
                 }
             </select>
@@ -81,7 +75,8 @@
         <div class="col-12 col-md-6">
             <label class="form-label">Kecamatan</label>
             <select id="theKecamatan" class="form-control mySelect" asp-for="Pegawai.KecamatanID">
-                @if (Model.NamaKecamatan is not null) {
+                @if (Model.NamaKecamatan is not null)
+                {
                     <option value="@Model.Pegawai.KecamatanID" selected>@Model.NamaKecamatan</option>
                 }
             </select>
@@ -89,7 +84,8 @@
         <div class="col-12 col-md-6">
             <label class="form-label">Kelurahan</label>
             <select id="theKelurahan" asp-for="Pegawai.KelurahanID" class="form-control mySelect">
-                @if (Model.NamaKelurahan is not null) {
+                @if (Model.NamaKelurahan is not null)
+                {
                     <option value="@Model.Pegawai.KelurahanID" selected>@Model.NamaKelurahan</option>
                 }
             </select>
@@ -99,4 +95,4 @@
             <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
         </div>
     </form>
- </div>
+</div>

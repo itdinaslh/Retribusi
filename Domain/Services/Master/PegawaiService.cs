@@ -18,8 +18,9 @@ public class PegawaiService : IPegawai
 
     public async Task SaveDataAsync(Pegawai peg)
     {
-        if (peg.PegawaiId == 0)
+        if (peg.PegawaiId == Guid.Empty)
         {
+            peg.PegawaiId = Guid.NewGuid();
             await context.AddAsync(peg);
         } else
         {
@@ -28,7 +29,8 @@ public class PegawaiService : IPegawai
             if (data is not null)
             {
                 data.NamaPegawai = peg.NamaPegawai;
-                data.NIK = peg.NIK;                
+                data.NIK = peg.NIK;
+                data.NIP = peg.NIP;
                 data.TglLahir = peg.TglLahir;
                 data.NoHP = peg.NoHP;
                 data.Email = peg.Email;
@@ -36,10 +38,10 @@ public class PegawaiService : IPegawai
                 data.StatusAktif = peg.StatusAktif;
                 data.TahunMasuk = peg.TahunMasuk;
                 data.Catatan = peg.Catatan;
-                data.BidangId = peg.BidangId;
-                data.KabupatenId = peg.KabupatenId;
-                data.KecamatanId = peg.KecamatanId;
-                data.KelurahanId = peg.KelurahanId;
+                data.RoleId = peg.RoleId;
+                data.BidangId = peg.BidangId;                
+                data.KecamatanID = peg.KecamatanID;
+                data.KelurahanID = peg.KelurahanID;
                 data.UpdatedAt = DateTime.Now;
 
                 context.Update(data);

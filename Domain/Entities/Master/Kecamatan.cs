@@ -38,5 +38,7 @@ public class Kecamatan {
 
 #nullable disable
 
-    public List<Driver> Drivers { get; set; }
+    public List<Pegawai> Pegawais { get; set; }
+
+    public List<ClientWR> ClientWRs { get; set; }
 }

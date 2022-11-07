@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
 
 
     // Handle Main Master Data
+    public DbSet<Role> Roles { get; set; }
     public DbSet<Bidang> Bidangs { get; set; }
     public DbSet<Provinsi> Provinsis { get; set; }
     public DbSet<Kabupaten> Kabupatens { get; set; }
@@ -25,14 +26,16 @@ public class AppDbContext : DbContext
     public DbSet<JenisKendaraan> JenisKendaraans { get; set; }
     public DbSet<MerkKendaraan> MerkKendaraans { get; set; }
     public DbSet<TipeKendaraan> TipeKendaraans { get; set; }
+    public DbSet<FungsiKendaraan> FungsiKendaraans { get; set; }
     public DbSet<JenisTps> JenisTps { get; set; }
     public DbSet<Tps> Tps { get; set; }
     public DbSet<Kendaraan> Kendaraans { get; set; }
 
     // Handle Pegawai
     public DbSet<TipePegawai> TipePegawais { get; set; }
-    public DbSet<Pegawai> Pegawais { get; set; }
-    public DbSet<Driver> Drivers { get; set; }
+    public DbSet<Pegawai> Pegawais { get; set; }    
+
+    public DbSet<ClientWR> ClientWRs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using Retribusi.Entities;
 using Retribusi.Helpers;
 using Retribusi.Models;
 using Retribusi.Repositories;
-using Retribusi.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Retribusi.Controllers;
 
@@ -13,12 +12,12 @@ namespace Retribusi.Controllers;
 public class DriverController : Controller
 {
     private readonly IHttpClientFactory _clientFactory;
-    private readonly IDriver repo;
+    private readonly IPegawai repo;
 
-    public DriverController(IHttpClientFactory clientFactory, IDriver driver)
+    public DriverController(IHttpClientFactory clientFactory, IPegawai pegawai)
     {
         _clientFactory = clientFactory;
-        repo = driver;
+        repo = pegawai;
     }
 
     [HttpGet("/transport/drivers")]
@@ -30,11 +29,12 @@ public class DriverController : Controller
     [HttpGet("/transport/driver/create")]
     public IActionResult Create()
     {
-        return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", new DriverVM
+        return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", new PegawaiVM
         {
-            Driver = new Driver
+            Pegawai = new Pegawai
             {
-                DriverId = Guid.Empty
+                PegawaiId = Guid.Empty,
+                RoleId = 2
             }
         });
     }
@@ -42,43 +42,43 @@ public class DriverController : Controller
     [HttpGet("/transport/driver/edit")]
     public async Task<IActionResult> Edit(Guid driverId)
     {
-        var data = await repo.Drivers.Select(x => new
+        var data = await repo.Pegawais.Select(x => new
         {
-            x.DriverId,
+            x.PegawaiId,
             x.NIK,
-            x.Nama,
+            x.NamaPegawai,
             x.TglLahir,
             x.NoHP,
             x.Email,
             x.Alamat,
-            x.IsActive,
+            x.StatusAktif,
             x.TahunMasuk,
             x.Catatan,
             x.BidangId,
             x.TipePegawaiId,
             x.KecamatanID,
             x.KelurahanID,
-            NamaBidang = x.Bidang.NamaBidang,
-            KotaId = x.Kecamatan.KabupatenID,
+            NamaBidang = x.Bidang!.NamaBidang,
+            KotaID = x.Kecamatan!.KabupatenID,
             NamaKota = x.Kecamatan.Kabupaten.NamaKabupaten,
             NamaKecamatan = x.Kecamatan.NamaKecamatan,
             NamaKelurahan = x.Kelurahan!.NamaKelurahan
-        }).FirstOrDefaultAsync(d => d.DriverId == driverId);
+        }).FirstOrDefaultAsync(d => d.PegawaiId == driverId);
 
         if (data is not null)
         {
-            return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", new DriverVM
+            return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", new PegawaiVM
             {
-                Driver = new Driver
+                Pegawai = new Pegawai
                 {
-                    DriverId = data.DriverId,
+                    PegawaiId = data.PegawaiId,
                     NIK = data.NIK,
-                    Nama = data.Nama,
+                    NamaPegawai = data.NamaPegawai,
                     TglLahir = data.TglLahir,
                     NoHP = data.NoHP,
                     Email = data.Email,
                     Alamat = data.Alamat,
-                    IsActive = data.IsActive,
+                    StatusAktif= data.StatusAktif,
                     TahunMasuk = data.TahunMasuk,
                     Catatan = data.Catatan,
                     BidangId = data.BidangId,
@@ -86,7 +86,7 @@ public class DriverController : Controller
                     KecamatanID = data.KecamatanID,
                     KelurahanID = data.KelurahanID
                 },
-                KotaId = data.KotaId,
+                KotaID = data.KotaID,
                 NamaBidang = data.NamaBidang,
                 NamaKota = data.NamaKota,
                 NamaKecamatan = data.NamaKecamatan,
@@ -98,48 +98,62 @@ public class DriverController : Controller
     }
 
     [HttpPost("/transport/driver/store")]
-    public async Task<IActionResult> StoreDriver(DriverVM model)
+    public async Task<IActionResult> StoreDriver(PegawaiVM model)
     {
 #nullable disable
 
+        model.Pegawai.RoleId = 2;
+
         if (ModelState.IsValid)
         {
-            UserModel user = new()
+            if (model.Pegawai.PegawaiId == Guid.Empty)
             {
-                FullName = model.Driver.Nama,
-                Email = model.Driver.Email,
-                Password = "Driver123$",
-                Roles = "Driver",
-                UserName = model.Driver.NIK
-            };
-
-            try
-            {
-                var client = _clientFactory.CreateClient("UserClient");
-
-                var content = new FormUrlEncodedContent(new[]
+                UserModel user = new()
                 {
+                    FullName = model.Pegawai.NamaPegawai,
+                    Email = model.Pegawai.Email,
+                    Password = "Driver123$",
+                    Roles = "Driver",
+                    UserName = model.Pegawai.NIK,
+                    PhoneNumber = model.Pegawai.NoHP
+                };
+
+                try
+                {
+                    var client = _clientFactory.CreateClient("UserClient");
+
+                    var content = new FormUrlEncodedContent(new[]
+                    {
                     new KeyValuePair<string, string>("FullName", user.FullName),
                     new KeyValuePair<string, string>("Email", user.Email),
                     new KeyValuePair<string, string>("Password", user.Password),
                     new KeyValuePair<string, string>("Roles", user.Roles),
-                    new KeyValuePair<string, string>("UserName", user.UserName)
+                    new KeyValuePair<string, string>("UserName", user.UserName),
+                    new KeyValuePair<string, string>("PhoneNumber", user.PhoneNumber)
                 });
 
-                HttpResponseMessage response = await client.PostAsync("/api/user/store", content);
+                    HttpResponseMessage response = await client.PostAsync("/api/user/store", content);
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    return StatusCode(500, "Request failed, something went wrong!");
-                } else
-                {
-                    await repo.SaveDataAsync(model.Driver);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return StatusCode(500, "Request failed, something went wrong!");
+                    }
+                    else
+                    {
+
+                        await repo.SaveDataAsync(model.Pegawai);
+                    }
+
                 }
-
-            } catch (Exception ex)
+                catch (Exception ex)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+            } else
             {
-                return StatusCode(500, ex.Message);
-            }            
+                await repo.SaveDataAsync(model.Pegawai);
+            }
+                        
 
             return Json(Result.Success());
 

@@ -144,9 +144,37 @@ $(document).on('shown.bs.modal', function () {
         }
     });
 
+    // Fungsi api search
+    $('#Fungsi').select2({
+        placeholder: 'Pilih Fungsi Kendaraan...',
+        dropdownParent: $('#myModal'),
+        allowClear: true,
+        ajax: {
+            url: "/api/transport/fungsi/search",
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term,
+                };
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            text: item.namaFungsi,
+                            id: item.id
+                        }
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+
     // Bidang asal api search
     $('#MyBidang').select2({
-        placeholder: 'Pilih Jenis...',
+        placeholder: 'Pilih Bidang...',
         dropdownParent: $('#myModal'),
         allowClear: true,
         ajax: {

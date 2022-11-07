@@ -159,8 +159,12 @@
                             <li class='@(ViewBag.Title == "Jenis WR" ? "active" : "")'>
                                 <a asp-action="Index" asp-controller="JenisWR">Jenis WR</a>
                             </li>
-                            <li><a href="#">Operator WR</a></li>
-                            <li><a href="#">Lokasi WR</a></li>
+                            <li class='@(ViewBag.Title == "Operator WR" ? "active" : "")'>
+                                <a asp-action="Index" asp-controller="OperatorWR">Operator WR</a>
+                            </li>
+                            <li class='@(ViewBag.Title == "Lokasi WR" ? "active" : "")'>
+                                <a asp-action="Index" asp-controller="ClientWR">Lokasi WR</a>
+                            </li>
                         </ul>
                     </li>
                     <li>

@@ -14,6 +14,8 @@ public class KendaraanVM
 
     public string NamaJenis { get; set; } = string.Empty;
 
+    public string NamaFungsi { get; set; } = string.Empty;
+
     public string BidangAsal { get; set; } = string.Empty;
 
     public string KabupatenAsal { get; set; } = string.Empty;

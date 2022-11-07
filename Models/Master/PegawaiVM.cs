@@ -2,17 +2,17 @@
 
 namespace Retribusi.Models;
 
-public class DriverVM
+public class PegawaiVM
 {
 #nullable disable
 
-    public Driver Driver { get; set; }
+    public Pegawai Pegawai { get; set; }
 
 #nullable enable
 
     public string? NamaBidang { get; set; }
 
-    public string? KotaId { get; set; }
+    public string? KotaID { get; set; }
 
     public string? NamaKota { get; set; }
 

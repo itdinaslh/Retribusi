@@ -6,8 +6,8 @@ namespace Retribusi.Entities;
 [Table("pegawai")]
 public class Pegawai
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int PegawaiId { get; set; }
+    [Key]
+    public Guid PegawaiId { get; set; } = Guid.Empty;
 
 #nullable disable
 
@@ -19,6 +19,13 @@ public class Pegawai
     [MinLength(16)]
     [MaxLength(16)]
     public string NIK { get; set; }
+
+#nullable enable
+
+    [MaxLength(50)]
+    public string? NIP { get; set; }
+
+#nullable disable
 
     [Required(ErrorMessage = "Tanggal Lahir Wajib Diisi")]
     public DateOnly TglLahir { get; set; }
@@ -36,7 +43,7 @@ public class Pegawai
     public int TipePegawaiId { get; set; }
 
     [Required(ErrorMessage = "Status Aktif Wajib Dipilih")]
-    public bool StatusAktif { get; set; }
+    public bool StatusAktif { get; set; } = true;
 
     public Int16? TahunMasuk { get; set; }
 
@@ -44,21 +51,16 @@ public class Pegawai
 
     public Guid? BidangId { get; set; }
 
-    public string? KabupatenId { get; set; }
+    public string? KecamatanID { get; set; }
 
-    public string? KecamatanId { get; set; }
+    public string? KelurahanID { get; set; }
 
-    public string? KelurahanId { get; set; }
+    public int? RoleId { get; set; }
 
     public Bidang? Bidang { get; set; }
-
-    [MaxLength(10)]
-    public Kabupaten? Kabupaten { get; set; }
-
-    [MaxLength(10)]
+    
     public Kecamatan? Kecamatan { get; set; }
-
-    [MaxLength(15)]
+    
     public Kelurahan? Kelurahan { get; set; }
 
     [MaxLength(255)]
@@ -67,8 +69,11 @@ public class Pegawai
 #nullable disable
     public TipePegawai TipePegawai { get; set; }
 
+    public Role Role { get; set; }
+
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
     public DateTime? UpdatedAt { get; set; } = DateTime.Now;
     
+    public List<ClientWR> ClientWRs { get; set; }
 }

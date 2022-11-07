@@ -56,10 +56,18 @@
                     <option value="@Model.Kendaraan.BidangAsalId" selected="selected">@Model.BidangAsal</option>
                 }
             </select>
-        </div>        
-        <div class="col-12 col-md-6">
+        </div>
+        <div class="col-12">
             <label class="form-label" for="Kendaraan.NoRangka">No Rangka</label>
             <input asp-for="Kendaraan.NoRangka" class="form-control" />
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label" for="Kendaraan.FungsiKendaraanID">Fungsi Kendaraan</label>
+            <select id="Fungsi" asp-for="Kendaraan.FungsiKendaraanID" class="form-control">
+                @if (Model.Kendaraan.FungsiKendaraanID is not null) {
+                    <option value="@Model.Kendaraan.FungsiKendaraanID">@Model.NamaFungsi</option>
+                }
+            </select>
         </div>
         <div class="col-12 col-md-6">
             <label class="form-label" for="Kendaraan.Konsumsi">Konsumsi KM/Liter</label>

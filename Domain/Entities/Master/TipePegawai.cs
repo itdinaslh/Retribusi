@@ -17,5 +17,5 @@ public class TipePegawai
 
     public bool IsActive { get; set; } = true;
 
-    public List<Driver> Drivers  { get; set; }
+    public List<Pegawai> Pegawais { get; set; }
 }
