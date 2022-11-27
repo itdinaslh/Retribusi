@@ -18,10 +18,12 @@ public class ClientWR
     [Required(ErrorMessage = "Harap Pilih Jenis WR")]
     public int JenisID { get; set; }
 
-    [Required(ErrorMessage = "Telp Object Retribusi Wajib Diisi")]
-    [MaxLength(20)]
-    public string ObjectPhone { get; set; }
+#nullable enable
 
+    [MaxLength(20)]
+    public string? ObjectPhone { get; set; }
+
+#nullable disable
     [Required(ErrorMessage = "Alamat Wajib Diisi")]
     [DataType(DataType.MultilineText)]
     public string Alamat { get; set; }
@@ -54,11 +56,10 @@ public class ClientWR
     [Required(ErrorMessage = "NIK Wajib Retribusi Wajib Diisi")]
     public string ClientNIK { get; set; }
 
-    [Required(ErrorMessage = "Telp Wajib Retribusi Wajib Diisi")]
-    [MaxLength(20)]
-    public string ClientPhone { get; set; }
-
 #nullable enable
+
+    [MaxLength(20)]
+    public string? ClientPhone { get; set; }
 
     [MaxLength(50)]
     public string? ClientNPWP { get; set; }
