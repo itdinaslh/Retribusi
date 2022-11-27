@@ -5,6 +5,8 @@ using Retribusi.Entities;
 using Retribusi.Helpers;
 using Retribusi.Models;
 using Retribusi.Repositories;
+using System.Text.Json.Nodes;
+using System.Globalization;
 
 namespace Retribusi.Controllers;
 
@@ -29,14 +31,7 @@ public class DriverController : Controller
     [HttpGet("/transport/driver/create")]
     public IActionResult Create()
     {
-        return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", new PegawaiVM
-        {
-            Pegawai = new Pegawai
-            {
-                PegawaiId = Guid.Empty,
-                RoleId = 2
-            }
-        });
+        return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", new PegawaiVM());
     }
 
     [HttpGet("/transport/driver/edit")]
@@ -86,6 +81,9 @@ public class DriverController : Controller
                     KecamatanID = data.KecamatanID,
                     KelurahanID = data.KelurahanID
                 },
+                TheNIK = data.NIK,
+                NamaOrang = data.NamaPegawai,
+                Lahir = data.TglLahir.ToString("dd-MM-yyyy"),
                 KotaID = data.KotaID,
                 NamaBidang = data.NamaBidang,
                 NamaKota = data.NamaKota,
@@ -97,66 +95,44 @@ public class DriverController : Controller
         return NotFound();
     }
 
-    [HttpPost("/transport/driver/store")]
-    public async Task<IActionResult> StoreDriver(PegawaiVM model)
+    [HttpGet("/transport/driver/check")]  
+    public async Task<IActionResult> CheckDriver(string nik)
     {
 #nullable disable
-
-        model.Pegawai.RoleId = 2;
-
-        if (ModelState.IsValid)
+        try
         {
-            if (model.Pegawai.PegawaiId == Guid.Empty)
-            {
-                UserModel user = new()
-                {
-                    FullName = model.Pegawai.NamaPegawai,
-                    Email = model.Pegawai.Email,
-                    Password = "Driver123$",
-                    Roles = "Driver",
-                    UserName = model.Pegawai.NIK,
-                    PhoneNumber = model.Pegawai.NoHP
-                };
+            var client = _clientFactory.CreateClient("UserClient");
 
-                try
-                {
-                    var client = _clientFactory.CreateClient("UserClient");
+            HttpResponseMessage response = await client.GetAsync("/api/pegawai/search?nik=" + nik);
 
-                    var content = new FormUrlEncodedContent(new[]
-                    {
-                    new KeyValuePair<string, string>("FullName", user.FullName),
-                    new KeyValuePair<string, string>("Email", user.Email),
-                    new KeyValuePair<string, string>("Password", user.Password),
-                    new KeyValuePair<string, string>("Roles", user.Roles),
-                    new KeyValuePair<string, string>("UserName", user.UserName),
-                    new KeyValuePair<string, string>("PhoneNumber", user.PhoneNumber)
-                });
+            var str = response.Content.ReadAsStringAsync().Result;
 
-                    HttpResponseMessage response = await client.PostAsync("/api/user/store", content);
+            var data = JsonObject.Parse(str);            
 
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return StatusCode(500, "Request failed, something went wrong!");
-                    }
-                    else
-                    {
+            return Json(data);
 
-                        await repo.SaveDataAsync(model.Pegawai);
-                    }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, ex.Message);
-                }
-            } else
-            {
-                await repo.SaveDataAsync(model.Pegawai);
+    [HttpPost("/transport/driver/store")]
+    public async Task<IActionResult> StoreDriver(PegawaiVM model) {
+        model.Pegawai.RoleId = 2;
+        model.Pegawai.TglLahir = DateOnly.ParseExact(model.Lahir, "dd-MM-yyyy", new CultureInfo("id-ID"));
+
+        if (ModelState.IsValid) {
+            Pegawai peg = await repo.Pegawais.Where(x => x.NIK == model.Pegawai.NIK).FirstOrDefaultAsync();
+
+            if (peg is not null) {
+                return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", model);
             }
-                        
+
+            await repo.SaveDataAsync(model.Pegawai);
 
             return Json(Result.Success());
-
         }
 
         return PartialView("~/Views/Transport/Driver/AddEdit.cshtml", model);

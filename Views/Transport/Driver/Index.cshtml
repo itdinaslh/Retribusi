@@ -11,12 +11,6 @@
     <link rel="stylesheet" type="text/css" href="~/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="~/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/fab.css" />
-    <style>
-        .mySelect {
-            background-color: #283046 !important;
-            color: #b4b7bd !important;
-        }
-    </style>
 }
 
 <!--Modal Window-->
@@ -87,7 +81,7 @@
     </div>
 </div>
 
-<button id="floating-button" class="showMe" data-href="/transport/driver/create">+</button>
+<button type="button" class="showMe" id="floating-button" data-href="/transport/driver/create">+</button>
 
 @section vendorjs {
     <script src="~/lib/sweetalert/sweetalert2.all.min.js"></script>
@@ -100,6 +94,6 @@
 }
 
 @section scripts {
-    <script src="~/pages/transport/driver.js"></script>
     <script src="~/js/modalForm.js"></script>
+    <script src="~/pages/transport/driver.js"></script>    
 }

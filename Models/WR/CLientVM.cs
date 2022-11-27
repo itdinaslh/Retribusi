@@ -9,11 +9,7 @@ public class CLientVM
 
     public ClientWR ClientWR { get; set; }
 
-    [Required(ErrorMessage = "Kota/Wilayah Wajib Diisi")]
     public string KotaID { get; set; }
-
-    [Required(ErrorMessage = "Kecamatan Wajib Diisi")]
-    public string KecamatanID { get; set; }
 
 # nullable enable
 

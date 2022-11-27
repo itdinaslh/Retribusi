@@ -1,1 +1,109 @@
-﻿
+﻿@model CLientVM
+
+<div class="modal-header bg-transparent">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body pb-5 px-sm-5 pt-50">
+    <div class="text-center mb-2">
+        <h1 class="mb-1">Tambah / Edit Lokasi WR</h1>
+    </div>
+    <form action="/wr/lokasi/store" method="post" class="row gy-1 pt-75">
+        <input type="hidden" asp-for="ClientWR.ClientId" />
+        <!-- First Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Jenis WR *</label>
+            <select id="myJenis" asp-for="ClientWR.JenisID" class="form-control" required>
+
+            </select>
+            <span asp-validation-for="ClientWR.JenisID" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Nama Objek Retribusi *</label>
+            <input asp-for="ClientWR.ObjectName" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.ObjectName" class="text-danger"></span>
+        </div>
+        <!-- Second Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">HP/Telp Objek Retribusi *</label>
+            <input asp-for="ClientWR.ObjectPhone" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.ObjectPhone" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Alamat Objek Retribusi *</label>
+            <input asp-for="ClientWR.Alamat" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.Alamat" class="text-danger"></span>
+        </div>
+        <!-- 3rd Row -->
+        <div class="col-12 col-md-4">
+            <label class="form-label">Kota/Wilayah *</label>
+            <select id="theKota" asp-for="KotaID" class="form-control" required>
+            </select>
+            <span asp-validation-for="KotaID" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label">Kecamatan *</label>
+            <select id="theKecamatan" asp-for="ClientWR.KecamatanID" class="form-control" required>
+            </select>
+            <span asp-validation-for="ClientWR.KecamatanID" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label">Kelurahan</label>
+            <select id="theKelurahan" asp-for="ClientWR.KelurahanID" class="form-control">
+            </select>            
+        </div>
+        <!-- 4th Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Koordinat Lintang *</label>
+            <input asp-for="ClientWR.Latitude" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.Latitude" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Koordinat Bujur *</label>
+            <input asp-for="ClientWR.Longitude" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.Longitude" class="text-danger"></span>
+        </div>
+        <!-- 5th Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Nama Wajib Retribusi *</label>
+            <input asp-for="ClientWR.ClientName" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.ClientName" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">NIK Wajib Retribusi *</label>
+            <input asp-for="ClientWR.ClientNIK" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.ClientNIK" class="text-danger"></span>
+        </div>
+        <!-- 6th Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">NPWP Wajib Retribusi</label>
+            <input asp-for="ClientWR.ClientNPWP" class="form-control" autocomplete="off" />            
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">No HP Wajib Retribusi *</label>
+            <input asp-for="ClientWR.ClientPhone" class="form-control" required autocomplete="off" />
+            <span asp-validation-for="ClientWR.ClientPhone" class="text-danger"></span>
+        </div>
+        <!-- 7th Row -->
+        <div class="col-12 col-md-6">
+            <label class="form-label">Operator WR *</label>
+            <select id="operator" asp-for="ClientWR.PegawaiId" class="form-control" required>
+
+            </select>
+            <span asp-validation-for="ClientWR.PegawaiId" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Status Aktif *</label>
+            <select id="status" asp-for="ClientWR.StatusAktif" class="form-control" required>
+                <option value="true">Aktif</option>
+                <option value="false">Tidak Aktif</option>
+            </select>
+            <span asp-validation-for="ClientWR.StatusAktif" class="text-danger"></span>
+        </div>
+        <!-- Buttons -->
+        <div class="col-12 text-center mt-2 pt-50">
+            <button type="submit" class="btn btn-success me-1">Submit</button>
+            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
+        </div>
+    </form>
+</div>

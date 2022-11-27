@@ -68,5 +68,10 @@ public class AppDbContext : DbContext
             .HasOne(k => k.KecamatanPenugasan)
             .WithMany(kec => kec.KendaraanPenugasan)
             .HasForeignKey(k => k.KecamatanPenugasanId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<ClientWR>()
+            .HasOne(c => c.JenisWR)
+            .WithMany(j => j.ClientWRs)
+            .HasForeignKey(c => c.JenisID).OnDelete(DeleteBehavior.Restrict);
     }
 }

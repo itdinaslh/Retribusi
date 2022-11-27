@@ -6,9 +6,15 @@ public class PegawaiVM
 {
 #nullable disable
 
-    public Pegawai Pegawai { get; set; }
+    public Pegawai Pegawai { get; set; } = new Pegawai();
 
 #nullable enable
+    
+    public string? Lahir { get; set; }
+
+    public string? TheNIK { get; set; }
+
+    public string? NamaOrang { get; set; }
 
     public string? NamaBidang { get; set; }
 

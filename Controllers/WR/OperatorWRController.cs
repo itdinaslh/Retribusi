@@ -4,6 +4,7 @@ using Retribusi.Entities;
 using Retribusi.Helpers;
 using Retribusi.Models;
 using Retribusi.Repositories;
+using System.Globalization;
 
 namespace Retribusi.Controllers;
 
@@ -81,6 +82,7 @@ public class OperatorWRController : Controller
                     KecamatanID = data.KecamatanID,
                     KelurahanID = data.KelurahanID
                 },
+                Lahir = data.TglLahir.ToString("dd-MM-yyyy"),
                 KotaID = data.KotaID,
                 NamaBidang = data.NamaBidang,
                 NamaKota = data.NamaKota,
@@ -99,6 +101,8 @@ public class OperatorWRController : Controller
 
         model.Pegawai.RoleId = 3;
         model.Pegawai.TipePegawaiId = 1;
+
+        model.Pegawai.TglLahir = DateOnly.ParseExact(model.Lahir, "dd-MM-yyyy", new CultureInfo("id-ID"));
 
         if (ModelState.IsValid)
         {

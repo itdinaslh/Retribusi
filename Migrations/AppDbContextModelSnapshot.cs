@@ -80,9 +80,6 @@ namespace Retribusi.Migrations
                     b.Property<int>("JenisID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("JenisWRJenisID")
-                        .HasColumnType("int");
-
                     b.Property<string>("KecamatanID")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -123,7 +120,7 @@ namespace Retribusi.Migrations
 
                     b.HasKey("ClientId");
 
-                    b.HasIndex("JenisWRJenisID");
+                    b.HasIndex("JenisID");
 
                     b.HasIndex("KecamatanID");
 
@@ -132,89 +129,6 @@ namespace Retribusi.Migrations
                     b.HasIndex("PegawaiId");
 
                     b.ToTable("clientwr");
-                });
-
-            modelBuilder.Entity("Retribusi.Entities.Driver", b =>
-                {
-                    b.Property<Guid>("DriverId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Alamat")
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("BidangId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Catatan")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("KecamatanID")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("KelurahanID")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("NIK")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("varchar(16)");
-
-                    b.Property<string>("Nama")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("NoHP")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<int?>("TahunMasuk")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly?>("TglLahir")
-                        .HasColumnType("date");
-
-                    b.Property<int>("TipePegawaiId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("DriverId");
-
-                    b.HasIndex("BidangId");
-
-                    b.HasIndex("KecamatanID");
-
-                    b.HasIndex("KelurahanID");
-
-                    b.HasIndex("TipePegawaiId");
-
-                    b.ToTable("drivers");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.FungsiKendaraan", b =>
@@ -841,7 +755,9 @@ namespace Retribusi.Migrations
                 {
                     b.HasOne("Retribusi.Entities.JenisWR", "JenisWR")
                         .WithMany("ClientWRs")
-                        .HasForeignKey("JenisWRJenisID");
+                        .HasForeignKey("JenisID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Retribusi.Entities.Kecamatan", "Kecamatan")
                         .WithMany("ClientWRs")
@@ -866,39 +782,6 @@ namespace Retribusi.Migrations
                     b.Navigation("Kelurahan");
 
                     b.Navigation("Pegawai");
-                });
-
-            modelBuilder.Entity("Retribusi.Entities.Driver", b =>
-                {
-                    b.HasOne("Retribusi.Entities.Bidang", "Bidang")
-                        .WithMany("Drivers")
-                        .HasForeignKey("BidangId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Retribusi.Entities.Kecamatan", "Kecamatan")
-                        .WithMany("Drivers")
-                        .HasForeignKey("KecamatanID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Retribusi.Entities.Kelurahan", "Kelurahan")
-                        .WithMany("Drivers")
-                        .HasForeignKey("KelurahanID");
-
-                    b.HasOne("Retribusi.Entities.TipePegawai", "TipePegawai")
-                        .WithMany("Drivers")
-                        .HasForeignKey("TipePegawaiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bidang");
-
-                    b.Navigation("Kecamatan");
-
-                    b.Navigation("Kelurahan");
-
-                    b.Navigation("TipePegawai");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kabupaten", b =>
@@ -1076,8 +959,6 @@ namespace Retribusi.Migrations
 
             modelBuilder.Entity("Retribusi.Entities.Bidang", b =>
                 {
-                    b.Navigation("Drivers");
-
                     b.Navigation("KendaraanAsal");
 
                     b.Navigation("KendaraanPenugasan");
@@ -1120,8 +1001,6 @@ namespace Retribusi.Migrations
                 {
                     b.Navigation("ClientWRs");
 
-                    b.Navigation("Drivers");
-
                     b.Navigation("Kelurahans");
 
                     b.Navigation("KendaraanAsal");
@@ -1134,8 +1013,6 @@ namespace Retribusi.Migrations
             modelBuilder.Entity("Retribusi.Entities.Kelurahan", b =>
                 {
                     b.Navigation("ClientWRs");
-
-                    b.Navigation("Drivers");
 
                     b.Navigation("Pegawais");
 
@@ -1171,8 +1048,6 @@ namespace Retribusi.Migrations
 
             modelBuilder.Entity("Retribusi.Entities.TipePegawai", b =>
                 {
-                    b.Navigation("Drivers");
-
                     b.Navigation("Pegawais");
                 });
 #pragma warning restore 612, 618

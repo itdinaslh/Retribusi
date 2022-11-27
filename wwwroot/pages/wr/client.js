@@ -33,16 +33,8 @@ function loadTable() {
             { data: "kecamatan", name: "kecamatan", sortable: false, autoWidth: true },
             { data: "kelurahan", name: "kelurahan", sortable: false, autoWidth: true, nowrap: false },
             {
-                data: 'pegawaiId',
-                render: function (data, type, row) {
-                    // return "<button type='button' class='btn btn-sm btn-success mr-2 showMe' style='width:100%;' data-href='/wr/operator/edit/?operatorId=" + row.pegawaiId + "'> Edit</button>"
-                    return 
-                    `<div class="dropdown chart-dropdown">
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <button class="dropdown-item showMe" data-href="/wr/lokasi/edit/?clientId=` + row.clientid  + `">Edit</button>
-                        </div>
-                    </div>`
-                },
+                data: 'clientId',                
+                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-success mr-2 showMe' style='width:100%;' data-href='/wr/lokasi/edit/?clientId=" + row.clientId + "'> Edit</button>" },
                 sortable: false
             }
         ]
@@ -55,38 +47,13 @@ $(document).on('shown.bs.modal', function () {
         placeholder: 'Pilih Kecamatan...'
     });
 
+    PopulateOperator();
+    PopulateJenis();
+
     // initiate select2 for kecamatan
     $('#theKelurahan').select2({
         placeholder: 'Pilih Kelurahan...'
-    });
-
-    // Bidang API search
-    $('#theBidang').select2({
-        placeholder: 'Pilih Bidang...',
-        dropdownParent: $('#myModal'),
-        allowClear: true,
-        ajax: {
-            url: "/api/master/bidang/search",
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query = {
-                    term: params.term,
-                };
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            text: item.namaBidang,
-                            id: item.id
-                        }
-                    })
-                }
-            },
-            cache: true
-        }
-    });
+    });    
 
     // Kota API search
     $('#theKota').select2({
@@ -189,6 +156,66 @@ function PopulateKelurahan(kec) {
                     results: $.map(result, function (item) {
                         return {
                             text: item.namaKelurahan,
+                            id: item.id
+                        }
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+}
+
+function PopulateOperator() {
+    $('#operator').select2({
+        placeholder: 'Pilih Operator WR...',
+        dropdownPosition: 'below',
+        dropdownParent: $('#myModal'),
+        allowClear: true,
+        ajax: {
+            url: "/api/master/pegawai/operatorwr/search",
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term,
+                };
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            text: item.namaOperator,
+                            id: item.id
+                        }
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+}
+
+function PopulateJenis() {
+    $('#myJenis').select2({
+        placeholder: 'Pilih Jenis WR...',
+        dropdownPosition: 'below',
+        dropdownParent: $('#myModal'),
+        allowClear: true,
+        ajax: {
+            url: "/api/wr/jenis/search",
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term,
+                };
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            text: item.namaJenis,
                             id: item.id
                         }
                     })

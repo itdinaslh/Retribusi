@@ -53,4 +53,18 @@ public class JenisWRApiController : ControllerBase
 
         return Ok(jsonData);
     }
+
+    [HttpGet("/api/wr/jenis/search")]
+    public async Task<IActionResult> SearchOperatorWR(string? term)
+    {
+        var data = await repo.JenisWRs            
+            .Where(k => !String.IsNullOrEmpty(term) ?
+                k.NamaJenis.ToLower().Contains(term.ToLower()) : true
+            ).Select(s => new {
+                id = s.JenisID,
+                namaJenis = s.NamaJenis
+            }).Take(10).ToListAsync();
+
+        return Ok(data);
+    }
 }

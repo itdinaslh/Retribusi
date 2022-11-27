@@ -6,6 +6,7 @@ function loadContent() {
     loadTable();
 }
 
+
 $(document).on('select2:open', () => {
     document.querySelector('.select2-search__field').focus();
 });
@@ -47,6 +48,11 @@ $(document).on('shown.bs.modal', function () {
     // initiate select2 for kecamatan
     $('#theKecamatan').select2({
         placeholder: 'Pilih Kecamatan...'
+    });
+
+    $('.dtpicker').flatpickr({
+        dateFormat: 'd-m-Y',
+        static: true
     });
 
     // initiate select2 for kecamatan

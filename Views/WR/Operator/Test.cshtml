@@ -1,0 +1,185 @@
+﻿@model PegawaiVM
+
+@{
+    ViewData["title"] = "Operator WR";
+}
+
+@section vendorcss {
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datepicker/css/datepicker.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert/sweetalert2.min.css" />
+    <link rel="stylesheet" href="~/css/fab.css" />
+    <style>
+        .mySelect {
+            background-color: #283046 !important;
+            color: #b4b7bd !important;
+        }
+
+        .datepicker {
+            z-index: 1151 !important;
+        }
+    </style>
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row mb-2">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center
+                justify-content-between">
+                    <h4 class="mb-sm-0 font-size-18">Operator WR</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:
+                                void(0);">Wajib Retribusi</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:
+                                void(0);">Data Referensi</a>
+                            </li>
+                            <li class="breadcrumb-item active">Operator WR</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Data Operator WR</h4>
+                        <div class="dropdown chart-dropdown">
+                            <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <button class="dropdown-item showMe" data-href="/wr/operator/create">Tambah Operator</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/wr/operator/store" method="post" class="row gy-1 pt-75">
+                            <input type="hidden" asp-for="Pegawai.PegawaiId" />
+                            <!-- First Row -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="NIK">NIK *</label>
+                                <input asp-for="Pegawai.NIK" class="form-control" autocomplete="off" required autofocus />
+                                <span asp-validation-for="Pegawai.NIK" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">NIP</label>
+                                <input asp-for="Pegawai.NIP" class="form-control" autocomplete="off" />
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="Nama">Nama *</label>
+                                <input asp-for="Pegawai.NamaPegawai" class="form-control" required />
+                                <span asp-validation-for="Pegawai.NamaPegawai" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Tanggal Lahir</label>
+                                <input type="text" asp-for="Lahir" class="form-control dtpicker datepicker" />
+                            </div>
+                            <!-- Second Row -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">No HP *</label>
+                                <input asp-for="Pegawai.NoHP" class="form-control" required />
+                                <span asp-validation-for="Pegawai.NoHP" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Email *</label>
+                                <input asp-for="Pegawai.Email" class="form-control" required />
+                                <span asp-validation-for="Pegawai.Email" class="text-danger"></span>
+                            </div>
+                            <!-- Alamat Lines / 3rd Row -->
+                            <div class="col-12">
+                                <label class="form-label" for="Alamat">Alamat *</label>
+                                <textarea asp-for="Pegawai.Alamat" rows="2" class="form-control" required></textarea>
+                                <span asp-validation-for="Pegawai.Alamat" class="text-danger"></span>
+                            </div>
+                            <!-- 5th Row / Catatan -->
+                            <div class="col-12 mb-2">
+                                <label class="form-label">Catatan</label>
+                                <textarea class="form-control" rows="2" asp-for="Pegawai.Catatan" placeholder="Catatan mengenai operator"></textarea>
+                            </div>
+                            <h4>Wilayah Penugasan</h4>
+                            <!-- 6th Row / Bidang Penugasan -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Bidang Penugasan</label>
+                                <select id="theBidang" class="form-control" asp-for="Pegawai.BidangId">
+                                    @if (Model.NamaBidang is not null)
+                                    {
+                                        <option value="@Model.Pegawai.BidangId" selected>@Model.NamaBidang</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Kota / Wilayah</label>
+                                <select id="theKota" class="form-control mySelect">
+                                    @if (Model.NamaKota is not null)
+                                    {
+                                        <option value="@Model.KotaID" selected>@Model.NamaKota</option>
+                                    }
+                                </select>
+                            </div>
+                            <!-- 7th Row / Kecamatan dan Kelurahan tugas -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Kecamatan</label>
+                                <select id="theKecamatan" class="form-control mySelect" asp-for="Pegawai.KecamatanID">
+                                    @if (Model.NamaKecamatan is not null)
+                                    {
+                                        <option value="@Model.Pegawai.KecamatanID" selected>@Model.NamaKecamatan</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Kelurahan</label>
+                                <select id="theKelurahan" asp-for="Pegawai.KelurahanID" class="form-control mySelect">
+                                    @if (Model.NamaKelurahan is not null)
+                                    {
+                                        <option value="@Model.Pegawai.KelurahanID" selected>@Model.NamaKelurahan</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-12 text-center mt-2 pt-50">
+                                <button type="submit" class="btn btn-success me-1">Submit</button>
+                                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="floating-button" class="showMe" data-href="/wr/operator/create">+</button>
+
+@section vendorjs {
+        <script src="~/lib/sweetalert/sweetalert2.all.min.js"></script>
+        <script src="~/lib/select2/js/select2.full.min.js"></script>    
+        <!-- Required datatable js -->
+        <script src="~/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+        <script src="~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+        <script src="~/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+        <script src="~/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.min.js"></script>
+        <script src="~/lib/datepicker/js/bootstrap-datepicker.js"></script>
+}
+
+@section scripts {
+        <script src="~/js/modalForm.js"></script>
+        <script src="~/pages/wr/operator.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.dtpicker').datepicker();
+            });
+        </script>
+}

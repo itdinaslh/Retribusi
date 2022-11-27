@@ -51,4 +51,19 @@ public class PegawaiApiController : ControllerBase
 
         return Ok(jsonData);
     }
+
+    [HttpGet("/api/master/pegawai/operatorwr/search")]
+    public async Task<IActionResult> SearchOperatorWR(string? term)
+    {
+        var data = await repo.Pegawais
+            .Where(p => p.RoleId == 3)
+            .Where(k => !String.IsNullOrEmpty(term) ?
+                k.NamaPegawai.ToLower().Contains(term.ToLower()) : true
+            ).Select(s => new {
+                id = s.PegawaiId,
+                namaOperator = s.NamaPegawai + " (" + s.Kecamatan!.Kabupaten.NamaKabupaten + ")"
+            }).Take(10).ToListAsync();
+
+        return Ok(data);
+    }
 }
