@@ -17,7 +17,7 @@ public class TpsService : ITps
 
     public async Task SaveDataAsync(Tps tps)
     {
-        if (tps.TpsId == 0)
+        if (tps.TpsId == Guid.Empty)
         {
             await context.AddAsync(tps);
         } else
@@ -26,8 +26,22 @@ public class TpsService : ITps
 
             if (data is not null)
             {
-                 
+                data.TpsCode = tps.TpsCode;
+                data.NamaTps = tps.NamaTps;
+                data.JenisTpsId = tps.JenisTpsId;
+                data.KelurahanID = tps.KelurahanID;
+                data.LuasLahan = tps.LuasLahan;
+                data.Volume = tps.Volume;
+                data.Latitude = tps.Latitude;
+                data.Longitude = tps.Longitude;
+                data.Alamat = tps.Alamat;
+                data.StatusLahanId = tps.StatusLahanId;
+                data.UpdatedAt = DateTime.Now;
+
+                context.Update(data);
             }
         }        
+
+        await context.SaveChangesAsync();
     }
 }

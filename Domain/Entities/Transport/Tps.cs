@@ -6,7 +6,8 @@ namespace Retribusi.Entities;
 [Table("tps")]
 public class Tps
 {
-    public int TpsId { get; set; }
+    [Key]
+    public Guid TpsId { get; set; } = Guid.Empty;
 
     [MaxLength(50)]
     public string? TpsCode { get; set; }
@@ -22,11 +23,7 @@ public class Tps
     [Required(ErrorMessage = "Kelurahan Wajib Dipilih..")]
     public string KelurahanID { get; set; }
 
-#nullable enable
-    [MaxLength(10)]
-    public string? KodePos { get; set; }
-
-    public string? Keterangan { get; set; }
+#nullable enable   
 
     [MaxLength(50)]
     public string? Latitude { get; set; }
@@ -34,12 +31,16 @@ public class Tps
     [MaxLength(50)]
     public string? Longitude { get; set; }
 
+    public double? LuasLahan { get; set; }
+
+    public double? Volume { get; set; }
+
 #nullable disable
     [Required(ErrorMessage = "Alamat Wajib Diisi...")]
     public string Alamat { get; set; }
 
     public int StatusLahanId { get; set; }
-
+    
     public Kelurahan Kelurahan { get; set; }
 
     public StatusLahan StatusLahan { get; set; }
