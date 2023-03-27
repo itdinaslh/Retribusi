@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retribusi.Entities;
 
-[Table("merkkendaraan")]
+[Table("MerkKendaraan")]
 public class MerkKendaraan {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int MerkKendaraanId { get; set; }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retribusi.Entities;
 
-[Table("bidang")]
+[Table("Bidang")]
 public class Bidang {
     [Key]
     public Guid BidangID { get; set; } = new Guid();

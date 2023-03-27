@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retribusi.Entities;
 
-[Table("clientwr")]
+[Table("ClientWR")]
 public class ClientWR
 {
     [Key]

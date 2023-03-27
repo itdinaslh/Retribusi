@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Retribusi.Entities;
 
 #nullable disable
-[Table("jenistps")]
+[Table("JenisTps")]
 public class JenisTps {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int JenisID { get; set; }

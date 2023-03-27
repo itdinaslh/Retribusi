@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retribusi.Entities;
 
-[Table("tps")]
+[Table("Tps")]
 public class Tps
 {
     [Key]

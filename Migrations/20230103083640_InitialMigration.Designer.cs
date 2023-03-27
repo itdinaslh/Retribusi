@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Retribusi.Data;
 
 #nullable disable
@@ -11,380 +12,393 @@ using Retribusi.Data;
 namespace Retribusi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221105063821_AddNIPToPegawai")]
-    partial class AddNIPToPegawai
+    [Migration("20230103083640_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Retribusi.Entities.Bidang", b =>
                 {
                     b.Property<Guid>("BidangID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("KepalaBidang")
                         .HasMaxLength(75)
-                        .HasColumnType("varchar(75)");
+                        .HasColumnType("character varying(75)");
 
                     b.Property<string>("NamaBidang")
                         .IsRequired()
                         .HasMaxLength(75)
-                        .HasColumnType("varchar(75)");
+                        .HasColumnType("character varying(75)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("BidangID");
 
-                    b.ToTable("bidang");
+                    b.ToTable("Bidang");
                 });
 
-            modelBuilder.Entity("Retribusi.Entities.Driver", b =>
+            modelBuilder.Entity("Retribusi.Entities.ClientWR", b =>
                 {
-                    b.Property<Guid>("DriverId")
+                    b.Property<Guid>("ClientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Alamat")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<Guid>("BidangId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("ClientNIK")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
 
-                    b.Property<string>("Catatan")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                    b.Property<string>("ClientNPWP")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("ClientPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("JenisID")
+                        .HasColumnType("integer");
 
                     b.Property<string>("KecamatanID")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("KelurahanID")
                         .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("character varying(15)");
 
-                    b.Property<string>("NIK")
+                    b.Property<string>("Latitude")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("varchar(16)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
-                    b.Property<string>("Nama")
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ObjectName")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
-                    b.Property<string>("NoHP")
+                    b.Property<string>("ObjectPhone")
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
-                    b.Property<int?>("TahunMasuk")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PegawaiId")
+                        .HasColumnType("uuid");
 
-                    b.Property<DateOnly?>("TglLahir")
-                        .HasColumnType("date");
-
-                    b.Property<int>("TipePegawaiId")
-                        .HasColumnType("int");
+                    b.Property<bool>("StatusAktif")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("longtext");
+                    b.HasKey("ClientId");
 
-                    b.HasKey("DriverId");
-
-                    b.HasIndex("BidangId");
+                    b.HasIndex("JenisID");
 
                     b.HasIndex("KecamatanID");
 
                     b.HasIndex("KelurahanID");
 
-                    b.HasIndex("TipePegawaiId");
+                    b.HasIndex("PegawaiId");
 
-                    b.ToTable("drivers");
+                    b.ToTable("ClientWR");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.FungsiKendaraan", b =>
                 {
                     b.Property<int>("FungsiKendaraanID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("FungsiKendaraanID"));
 
                     b.Property<string>("NamaFungsi")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.HasKey("FungsiKendaraanID");
 
-                    b.ToTable("fungsikendaraan");
+                    b.ToTable("FungsiKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.JenisKendaraan", b =>
                 {
                     b.Property<int>("JenisID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("JenisID"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("KodeJenis")
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("NamaJenis")
                         .IsRequired()
                         .HasMaxLength(75)
-                        .HasColumnType("varchar(75)");
+                        .HasColumnType("character varying(75)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("JenisID");
 
-                    b.ToTable("jeniskendaraan");
+                    b.ToTable("JenisKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.JenisTps", b =>
                 {
                     b.Property<int>("JenisID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("JenisID"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NamaJenis")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("JenisID");
 
-                    b.ToTable("jenistps");
+                    b.ToTable("JenisTps");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.JenisWR", b =>
                 {
                     b.Property<int>("JenisID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("JenisID"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NamaJenis")
                         .IsRequired()
                         .HasMaxLength(75)
-                        .HasColumnType("varchar(75)");
+                        .HasColumnType("character varying(75)");
 
                     b.Property<string>("NoRekening")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("JenisID");
 
-                    b.ToTable("jeniswr");
+                    b.ToTable("JenisWR");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kabupaten", b =>
                 {
                     b.Property<string>("KabupatenID")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<bool>("IsKota")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Latitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Longitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("NamaKabupaten")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
                     b.Property<string>("ProvinsiID")
                         .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
+                        .HasColumnType("character varying(5)");
 
                     b.HasKey("KabupatenID");
 
                     b.HasIndex("ProvinsiID");
 
-                    b.ToTable("kabupaten");
+                    b.ToTable("Kabupaten");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kecamatan", b =>
                 {
                     b.Property<string>("KecamatanID")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("KabupatenID")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Latitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Longitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("NamaKecamatan")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
                     b.HasKey("KecamatanID");
 
                     b.HasIndex("KabupatenID");
 
-                    b.ToTable("kecamatan");
+                    b.ToTable("Kecamatan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kelurahan", b =>
                 {
                     b.Property<string>("KelurahanID")
                         .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("character varying(15)");
 
                     b.Property<string>("KecamatanID")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Latitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Longitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("NamaKelurahan")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
                     b.HasKey("KelurahanID");
 
                     b.HasIndex("KecamatanID");
 
-                    b.ToTable("kelurahan");
+                    b.ToTable("Kelurahan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kendaraan", b =>
                 {
                     b.Property<int>("KendaraanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KendaraanId"));
 
                     b.Property<Guid?>("BidangAsalId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("BidangPenugasanId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<short?>("Fungsi")
                         .HasColumnType("smallint");
 
                     b.Property<int?>("FungsiKendaraanID")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("JenisKendaraanId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("KabupatenAsalId")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("KabupatenPenugasanId")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("KecamatanAsalId")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("KecamatanPenugasanId")
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<double?>("KonsumsiBBM")
-                        .HasColumnType("double");
+                        .HasColumnType("double precision");
 
                     b.Property<int?>("MerkKendaraanId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("NoPintu")
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("character varying(25)");
 
                     b.Property<string>("NoPolisi")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("character varying(25)");
 
                     b.Property<string>("NoRangka")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("TahunPengadaan")
                         .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
+                        .HasColumnType("character varying(5)");
 
                     b.Property<int?>("TipeKendaraanId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("KendaraanId");
 
@@ -408,91 +422,96 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("TipeKendaraanId");
 
-                    b.ToTable("kendaraan");
+                    b.ToTable("Kendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.MerkKendaraan", b =>
                 {
                     b.Property<int>("MerkKendaraanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MerkKendaraanId"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool?>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("KodeMerk")
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("NamaMerk")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("MerkKendaraanId");
 
-                    b.ToTable("merkkendaraan");
+                    b.ToTable("MerkKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Pegawai", b =>
                 {
-                    b.Property<int>("PegawaiId")
+                    b.Property<Guid>("PegawaiId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Alamat")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.Property<Guid?>("BidangId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Catatan")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
-                    b.Property<string>("KabupatenId")
-                        .HasColumnType("varchar(10)");
+                    b.Property<string>("KabupatenID")
+                        .HasColumnType("character varying(10)");
 
-                    b.Property<string>("KecamatanId")
-                        .HasColumnType("varchar(10)");
+                    b.Property<string>("KecamatanID")
+                        .HasColumnType("character varying(10)");
 
-                    b.Property<string>("KelurahanId")
-                        .HasColumnType("varchar(15)");
+                    b.Property<string>("KelurahanID")
+                        .HasColumnType("character varying(15)");
 
                     b.Property<string>("NIK")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("character varying(16)");
 
                     b.Property<string>("NIP")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("NamaPegawai")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("NoHP")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("StatusAktif")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<short?>("TahunMasuk")
                         .HasColumnType("smallint");
@@ -501,223 +520,251 @@ namespace Retribusi.Migrations
                         .HasColumnType("date");
 
                     b.Property<int>("TipePegawaiId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("PegawaiId");
 
                     b.HasIndex("BidangId");
 
-                    b.HasIndex("KabupatenId");
+                    b.HasIndex("KabupatenID");
 
-                    b.HasIndex("KecamatanId");
+                    b.HasIndex("KecamatanID");
 
-                    b.HasIndex("KelurahanId");
+                    b.HasIndex("KelurahanID");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("TipePegawaiId");
 
-                    b.ToTable("pegawai");
+                    b.ToTable("Pegawai");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Penugasan", b =>
                 {
                     b.Property<int>("PenugasanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PenugasanId"));
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("NamaPenugasan")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("PenugasanId");
 
-                    b.ToTable("penugasan");
+                    b.ToTable("Penugasan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Provinsi", b =>
                 {
                     b.Property<string>("ProvinsiID")
                         .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
+                        .HasColumnType("character varying(5)");
 
                     b.Property<string>("HcKey")
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("KodeNegara")
                         .IsRequired()
                         .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
+                        .HasColumnType("character varying(5)");
 
                     b.Property<string>("Latitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Longitude")
                         .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("NamaProvinsi")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("ProvinsiID");
 
-                    b.ToTable("provinsi");
+                    b.ToTable("Provinsi");
+                });
+
+            modelBuilder.Entity("Retribusi.Entities.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("RoleName")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.StatusLahan", b =>
                 {
                     b.Property<int>("StatusLahanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StatusLahanId"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool?>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("NamaStatus")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("StatusLahanId");
 
-                    b.ToTable("statuslahan");
+                    b.ToTable("StatusLahan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.StatusWR", b =>
                 {
                     b.Property<int>("StatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StatusId"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("StatusName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("statuswr");
+                    b.ToTable("StatusWR");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.TipeKendaraan", b =>
                 {
                     b.Property<int>("TipeKendaraanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TipeKendaraanId"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("MerkKendaraanId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("NamaTipe")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("TipeKendaraanId");
 
                     b.HasIndex("MerkKendaraanId");
 
-                    b.ToTable("tipekendaraan");
+                    b.ToTable("TipeKendaraan");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.TipePegawai", b =>
                 {
                     b.Property<int>("TipePegawaiId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TipePegawaiId"));
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("NamaTipe")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("TipePegawaiId");
 
-                    b.ToTable("tipepegawai");
+                    b.ToTable("TipePegawai");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Tps", b =>
                 {
-                    b.Property<int>("TpsId")
+                    b.Property<Guid>("TpsId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Alamat")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool?>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("JenisTpsId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("KelurahanID")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("Keterangan")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("KodePos")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("character varying(15)");
 
                     b.Property<string>("Latitude")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Longitude")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<double?>("LuasLahan")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("NamaTps")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
                     b.Property<int>("StatusLahanId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("TpsCode")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<double?>("Volume")
+                        .HasColumnType("double precision");
 
                     b.HasKey("TpsId");
 
@@ -727,40 +774,40 @@ namespace Retribusi.Migrations
 
                     b.HasIndex("StatusLahanId");
 
-                    b.ToTable("tps");
+                    b.ToTable("Tps");
                 });
 
-            modelBuilder.Entity("Retribusi.Entities.Driver", b =>
+            modelBuilder.Entity("Retribusi.Entities.ClientWR", b =>
                 {
-                    b.HasOne("Retribusi.Entities.Bidang", "Bidang")
-                        .WithMany("Drivers")
-                        .HasForeignKey("BidangId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Retribusi.Entities.JenisWR", "JenisWR")
+                        .WithMany("ClientWRs")
+                        .HasForeignKey("JenisID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Retribusi.Entities.Kecamatan", "Kecamatan")
-                        .WithMany("Drivers")
+                        .WithMany("ClientWRs")
                         .HasForeignKey("KecamatanID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Retribusi.Entities.Kelurahan", "Kelurahan")
-                        .WithMany("Drivers")
+                        .WithMany("ClientWRs")
                         .HasForeignKey("KelurahanID");
 
-                    b.HasOne("Retribusi.Entities.TipePegawai", "TipePegawai")
-                        .WithMany("Drivers")
-                        .HasForeignKey("TipePegawaiId")
+                    b.HasOne("Retribusi.Entities.Pegawai", "Pegawai")
+                        .WithMany("ClientWRs")
+                        .HasForeignKey("PegawaiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Bidang");
+                    b.Navigation("JenisWR");
 
                     b.Navigation("Kecamatan");
 
                     b.Navigation("Kelurahan");
 
-                    b.Navigation("TipePegawai");
+                    b.Navigation("Pegawai");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kabupaten", b =>
@@ -867,31 +914,35 @@ namespace Retribusi.Migrations
                         .WithMany("Pegawais")
                         .HasForeignKey("BidangId");
 
-                    b.HasOne("Retribusi.Entities.Kabupaten", "Kabupaten")
+                    b.HasOne("Retribusi.Entities.Kabupaten", null)
                         .WithMany("Pegawais")
-                        .HasForeignKey("KabupatenId");
+                        .HasForeignKey("KabupatenID");
 
                     b.HasOne("Retribusi.Entities.Kecamatan", "Kecamatan")
-                        .WithMany()
-                        .HasForeignKey("KecamatanId");
+                        .WithMany("Pegawais")
+                        .HasForeignKey("KecamatanID");
 
                     b.HasOne("Retribusi.Entities.Kelurahan", "Kelurahan")
-                        .WithMany()
-                        .HasForeignKey("KelurahanId");
+                        .WithMany("Pegawais")
+                        .HasForeignKey("KelurahanID");
+
+                    b.HasOne("Retribusi.Entities.Role", "Role")
+                        .WithMany("Pegawais")
+                        .HasForeignKey("RoleId");
 
                     b.HasOne("Retribusi.Entities.TipePegawai", "TipePegawai")
-                        .WithMany()
+                        .WithMany("Pegawais")
                         .HasForeignKey("TipePegawaiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Bidang");
 
-                    b.Navigation("Kabupaten");
-
                     b.Navigation("Kecamatan");
 
                     b.Navigation("Kelurahan");
+
+                    b.Navigation("Role");
 
                     b.Navigation("TipePegawai");
                 });
@@ -934,8 +985,6 @@ namespace Retribusi.Migrations
 
             modelBuilder.Entity("Retribusi.Entities.Bidang", b =>
                 {
-                    b.Navigation("Drivers");
-
                     b.Navigation("KendaraanAsal");
 
                     b.Navigation("KendaraanPenugasan");
@@ -958,6 +1007,11 @@ namespace Retribusi.Migrations
                     b.Navigation("Tps");
                 });
 
+            modelBuilder.Entity("Retribusi.Entities.JenisWR", b =>
+                {
+                    b.Navigation("ClientWRs");
+                });
+
             modelBuilder.Entity("Retribusi.Entities.Kabupaten", b =>
                 {
                     b.Navigation("Kecamatans");
@@ -971,18 +1025,22 @@ namespace Retribusi.Migrations
 
             modelBuilder.Entity("Retribusi.Entities.Kecamatan", b =>
                 {
-                    b.Navigation("Drivers");
+                    b.Navigation("ClientWRs");
 
                     b.Navigation("Kelurahans");
 
                     b.Navigation("KendaraanAsal");
 
                     b.Navigation("KendaraanPenugasan");
+
+                    b.Navigation("Pegawais");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.Kelurahan", b =>
                 {
-                    b.Navigation("Drivers");
+                    b.Navigation("ClientWRs");
+
+                    b.Navigation("Pegawais");
 
                     b.Navigation("Tps");
                 });
@@ -994,9 +1052,19 @@ namespace Retribusi.Migrations
                     b.Navigation("TipeKendaraans");
                 });
 
+            modelBuilder.Entity("Retribusi.Entities.Pegawai", b =>
+                {
+                    b.Navigation("ClientWRs");
+                });
+
             modelBuilder.Entity("Retribusi.Entities.Provinsi", b =>
                 {
                     b.Navigation("Kabupatens");
+                });
+
+            modelBuilder.Entity("Retribusi.Entities.Role", b =>
+                {
+                    b.Navigation("Pegawais");
                 });
 
             modelBuilder.Entity("Retribusi.Entities.TipeKendaraan", b =>
@@ -1006,7 +1074,7 @@ namespace Retribusi.Migrations
 
             modelBuilder.Entity("Retribusi.Entities.TipePegawai", b =>
                 {
-                    b.Navigation("Drivers");
+                    b.Navigation("Pegawais");
                 });
 #pragma warning restore 612, 618
         }

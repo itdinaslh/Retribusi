@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retribusi.Entities;
 
-[Table("roles")]
+[Table("Roles")]
 public class Role
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

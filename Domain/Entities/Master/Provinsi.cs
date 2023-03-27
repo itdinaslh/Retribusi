@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retribusi.Entities;
 
-[Table("provinsi")]
+[Table("Provinsi")]
 public class Provinsi {
     #nullable disable
     [Key]
